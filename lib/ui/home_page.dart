@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dicoding_news_app/model/article.dart';
+import 'package:dicoding_news_app/data/model/article.dart';
 import 'package:dicoding_news_app/ui/article_list_page.dart';
 import 'package:dicoding_news_app/ui/article_detail_page.dart';
 import 'package:dicoding_news_app/ui/settings_page.dart';
