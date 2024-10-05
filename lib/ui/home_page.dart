@@ -1,13 +1,18 @@
 import 'dart:io';
 
+import 'package:dicoding_news_app/data/api/api_service.dart';
 import 'package:dicoding_news_app/data/model/article.dart';
+import 'package:dicoding_news_app/provider/news_provider.dart';
+import 'package:dicoding_news_app/provider/scheduling_provider.dart';
 import 'package:dicoding_news_app/ui/article_list_page.dart';
 import 'package:dicoding_news_app/ui/article_detail_page.dart';
 import 'package:dicoding_news_app/ui/settings_page.dart';
 import 'package:dicoding_news_app/cummon/styles.dart';
+import 'package:dicoding_news_app/utils/notification_helper.dart';
 import 'package:dicoding_news_app/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -20,6 +25,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
+  // tambahkan untuk NotificationHelper
+  final NotificationHelper _notificationHelper = NotificationHelper();
   // Kita dapat menyederhanakannya dengan membuat variabel yang menampung item tab
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
@@ -31,11 +38,42 @@ class _HomePageState extends State<HomePage> {
       label: "Setting",
     ),
   ];
-  // buatkan list widget untuk menampilkan halaman ketika tab dipilih
+  // 2. kita implementasi state provider
   final List<Widget> _listWidget = [
-    ArticleListPage(),
-    SettingsPage(),
+    ChangeNotifierProvider<NewsProvider>(
+      // parameter dengan kelas Apiservice()
+      // panggil di dalam konstruktor sebagai parameter.
+      create: (_) => NewsProvider(apiService: ApiService()),
+      // Kemudian kita bisa mengakses kelas HomePage dengan memanggilnya pada parameter child.
+      child: const ArticleListPage(),
+    ),
+    // const SettingsPage(),
+    ChangeNotifierProvider<SchedulingProvider>(
+      create: (_) => SchedulingProvider(),
+      child: const SettingsPage(),
+    ),
   ];
+  // buatkan list widget untuk menampilkan halaman ketika tab dipilih
+  // di matikan karna sudah implementasi state provider
+  // final List<Widget> _listWidget = [
+  //   ArticleListPage(),
+  //   SettingsPage(),
+  // ];
+
+  // tambahkan untuk konfigutasi notifikasi
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(ArticleDetailPage.routeName);
+  }
+
+  // tambahkan untuk konfigurasi notifikasi
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:dicoding_news_app/cummon/navigation.dart';
 import 'package:dicoding_news_app/data/model/article.dart';
 import 'package:dicoding_news_app/ui/article_web_view.dart';
 import 'package:dicoding_news_app/widgets/custom_scaffold.dart';
@@ -58,8 +59,11 @@ class ArticleDetailPage extends StatelessWidget {
                   ElevatedButton(
                     child: const Text('Read more'),
                     onPressed: () {
-                      Navigator.pushNamed(context, ArticleWebView.routeName,
-                          arguments: article.url);
+                      Navigation.intentWithData(
+                          ArticleWebView.routeName, article.url);
+                      // dimatikan karna pakai cummon/Navigation
+                      // Navigator.pushNamed(context, ArticleWebView.routeName,
+                      //     arguments: article.url);
                     },
                   ),
                 ],
