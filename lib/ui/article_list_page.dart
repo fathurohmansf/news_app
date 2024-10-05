@@ -58,33 +58,47 @@ class _ArticleListPageState extends State<ArticleListPage> {
 
   // untuk fatching API dari http
   Widget _buildList(BuildContext context) {
-    return FutureBuilder<ArticlesResult>(
-      future: _article,
-      builder: (context, AsyncSnapshot<ArticlesResult> snapshot) {
-        var state = snapshot.connectionState;
-        if (state != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data?.articles.length,
-              itemBuilder: (context, index) {
-                var article = snapshot.data?.articles[index];
-                return CardArticle(article: article!);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                // gunakan _article = ApiService().topHeadlines(); untuk mengstate build ulang data
+                setState(() {
+                  _article = ApiService().topHeadlines();
+                });
               },
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Material(
-                child: Text(snapshot.error.toString()),
-              ),
-            );
-          } else {
-            return const Material(child: Text(''));
-          }
-        }
-      },
+              child: Text('Refresh Data')),
+          FutureBuilder<ArticlesResult>(
+            future: _article,
+            builder: (context, AsyncSnapshot<ArticlesResult> snapshot) {
+              var state = snapshot.connectionState;
+              if (state != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data?.articles.length,
+                    itemBuilder: (context, index) {
+                      var article = snapshot.data?.articles[index];
+                      return CardArticle(article: article!);
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Material(
+                      child: Text(snapshot.error.toString()),
+                    ),
+                  );
+                } else {
+                  return const Material(child: Text(''));
+                }
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 

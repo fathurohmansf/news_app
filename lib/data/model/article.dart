@@ -53,15 +53,15 @@ class Article {
     required this.url,
     this.urlToImage,
     required this.publishedAt,
-    required this.content,
+    this.content,
   });
 
   factory Article.fromJson(Map<String, dynamic> json) => Article(
         source: Source.fromJson(json["source"]),
         author: json["author"],
-        title: json["title"],
+        title: json["title"] ?? "", // tambahkan ?? "" jika data null
         description: json["description"],
-        url: json["url"],
+        url: json["url"] ?? "",
         urlToImage: json["urlToImage"],
         publishedAt: DateTime.parse(json["publishedAt"]),
         content: json["content"],
@@ -80,17 +80,17 @@ class Article {
 }
 
 class Source {
-  final String id;
+  final String? id; // error karna id ini json ada null
   final String name;
 
   Source({
-    required this.id,
+    this.id,
     required this.name,
   });
 
   factory Source.fromJson(Map<String, dynamic> json) => Source(
         id: json["id"],
-        name: json["name"],
+        name: json["name"] ?? "", // ?? "" untuk data null
       );
 
   Map<String, dynamic> toJson() => {

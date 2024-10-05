@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:dicoding_news_app/cummon/styles.dart';
 
 // CardArticle dengan meng-extends  kelas StatelessWidget.
+// widget yang berfungsi untuk menampilkan item data yang bersumber dari list berita.
+// Kemudian widget ini juga merupakan turunan dari kelas StatelessWidget yang berarti widget
+// ini tidak akan melakukan perubahan state apapun melainkan hanya menerima dan menampilkan data saja.
 class CardArticle extends StatelessWidget {
   final Article article;
 
