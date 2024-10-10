@@ -1,5 +1,6 @@
 import 'package:dicoding_news_app/data/api/api_service.dart';
 import 'package:dicoding_news_app/provider/news_provider.dart';
+import 'package:dicoding_news_app/utils/result_state.dart';
 import 'package:dicoding_news_app/widgets/card_article.dart';
 import 'package:flutter/material.dart';
 import 'package:dicoding_news_app/data/model/article.dart';

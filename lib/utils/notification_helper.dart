@@ -41,6 +41,7 @@ class NotificationHelper {
     });
   }
 
+  // showNotification untuk menambung data artikel
   Future<void> showNotification(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
       ArticlesResult articles) async {

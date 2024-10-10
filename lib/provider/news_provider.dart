@@ -1,10 +1,7 @@
 import 'package:dicoding_news_app/data/api/api_service.dart';
 import 'package:dicoding_news_app/data/model/article.dart';
+import 'package:dicoding_news_app/utils/result_state.dart';
 import 'package:flutter/material.dart';
-
-// 1. implementasi state provider
-enum ResultState { loading, noData, hasData, error }
-// kelas enum di atas dapat berubah-ubah state-nya dari loading, noData, hasData, atau error tergantung dari response API-nya
 
 class NewsProvider extends ChangeNotifier {
   final ApiService apiService;

@@ -8,6 +8,8 @@ import 'package:dicoding_news_app/utils/notification_helper.dart';
 // Fungsi initializeIsolate adalah mendaftarkan SendPort isolate UI untuk memungkinkan komunikasi dari isolate background
 final ReceivePort port = ReceivePort();
 
+// Fungsi class ini untuk menjalankan proses background.
+// jadi setelah data berhasil di dapatkan, akan di kirimkan ke showNotification
 class BackgroundService {
   static BackgroundService? _instance;
   static const String _isolateName = 'isolate';
@@ -30,6 +32,7 @@ class BackgroundService {
     print('Alarm fired!');
     final NotificationHelper notificationHelper = NotificationHelper();
     var result = await ApiService().topHeadlines();
+    // sebagai result data di kirimkan ke showNotification(notification_helper.dart)
     await notificationHelper.showNotification(
         flutterLocalNotificationsPlugin, result);
 

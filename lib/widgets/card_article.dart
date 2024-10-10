@@ -17,15 +17,20 @@ class CardArticle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: primaryColor,
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         leading: Hero(
           tag: article.urlToImage!,
-          child: Image.network(
-            article.urlToImage!,
+          // gunakan SizedBox agar terhindar error Leading widget consumes entire tile width di ListTile
+          child: SizedBox(
             width: 100,
+            height: 100,
+            child: Image.network(
+              article.urlToImage!,
+              fit: BoxFit.cover,
+              // width: 100,
+            ),
           ),
         ),
         title: Text(
